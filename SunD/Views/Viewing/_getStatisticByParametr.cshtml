@@ -1,0 +1,96 @@
+﻿@model IEnumerable<BusinessObjects.Model.WeatherStatistic>
+
+<div style="max-height:900px; overflow-y:scroll">
+    <table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Time)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Temperature)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Wetness)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DewPoint)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Pressure)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WindDirection)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WindSpeed)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CloudCover)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LowerCloudCover)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HorizontalVisibility)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NatureInvent)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Date.Date)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Time.TimeOfDay)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Temperature)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Wetness)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DewPoint)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Pressure)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.WindDirection)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.WindSpeed)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CloudCover)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LowerCloudCover)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.HorizontalVisibility)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NatureInvent)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+</div>

@@ -1,0 +1,29 @@
+﻿@model SunD.Models.ViewningData
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<div>
+    <form method="get" action="~/Viewing/GetStatisticByYear">
+        <label>For select by year input year)) </label><br />
+        <input type="number" name="year" /><br />
+        <input type="submit" value="Check statistics" />
+    </form>
+    <form method="get" action="~/Viewing/GetStatisticByMounth">
+        <label>For select by year select mounth)) </label><br />
+        <select id="mounth" name="mounth" style="width:200px">
+            @foreach (var item in Model.MounthSelectors)
+            {
+                <option value=@item.Value>@item.Name</option>
+            }
+        </select><br/>
+        <input type="submit" value="Check statistics" />
+    </form>
+</div>
+<div id="data">
+    @if(Model.WeatherStatistics != null)
+    {
+         @Html.Partial("_getStatisticByParametr", Model.WeatherStatistics)   
+    }
+</div>
