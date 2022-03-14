@@ -1,6 +1,7 @@
 using BusinessObjects;
 using IoCFactory;
 using Microsoft.EntityFrameworkCore;
+using ReflectionIT.Mvc.Paging;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +11,7 @@ string connectionString = builder.Configuration.GetConnectionString("PostgreSqlS
 builder.Services.AddDbContext<DataBaseContext>(options=>options.UseNpgsql(connectionString));
 builder.Services.AddRepository();
 builder.Services.AddService();
+builder.Services.AddPaging();
 
 var app = builder.Build();
 

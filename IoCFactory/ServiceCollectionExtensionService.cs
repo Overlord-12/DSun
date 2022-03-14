@@ -14,7 +14,6 @@ namespace IoCFactory
         public static IServiceCollection AddService(this IServiceCollection services)
         {
             services.AddTransient<IDataConvertService, DataConvertService>();
-            services.AddTransient<IWeatherService, WeatherService>();
             return services;
         }
     }
