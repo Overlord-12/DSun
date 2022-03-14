@@ -1,5 +1,4 @@
-﻿using BusinessObjects.Common;
-using BusinessObjects.Model;
+﻿using BusinessObjects.Model;
 using Microsoft.AspNetCore.Http;
 using OfficeOpenXml;
 using ServiceLibrary.Interface;
@@ -45,15 +44,15 @@ namespace ServiceLibrary
                                         Convert.ToDouble(worksheet.Cells[row, 5].Value?.ToString()?.Trim()) : 0,
                                         Pressure = !string.IsNullOrEmpty(worksheet.Cells[row, 6].Value?.ToString()?.Trim()) 
                                         ? Convert.ToInt32(worksheet.Cells[row, 6].Value?.ToString()?.Trim()) : 0,
-                                        WindDirection = worksheet.Cells[row, 8].Value?.ToString()?.Trim(),
+                                        WindDirection = worksheet.Cells[row, 7].Value?.ToString()?.Trim(),
                                         WindSpeed = !string.IsNullOrEmpty(worksheet.Cells[row, 8].Value?.ToString()?.Trim())
-                                        ? Convert.ToInt32(worksheet.Cells[row, 8].Value?.ToString()?.Trim()) : 0,
-                                        CloudCover = !string.IsNullOrEmpty(worksheet.Cells[row, 9].Value?.ToString()?.Trim()) 
                                         ? Convert.ToInt32(worksheet.Cells[row, 9].Value?.ToString()?.Trim()) : 0,
-                                        LowerCloudCover = !string.IsNullOrEmpty(worksheet.Cells[row, 10].Value?.ToString()?.Trim()) 
-                                        ? Convert.ToInt32(worksheet.Cells[row, 10].Value?.ToString()?.Trim()) : 0,
-                                        HorizontalVisibility = worksheet.Cells[row, 11].Value?.ToString()?.Trim(),
-                                        NatureInvent = worksheet.Cells[row, 12].Value?.ToString()?.Trim()
+                                        CloudCover = !string.IsNullOrEmpty(worksheet.Cells[row, 10].Value?.ToString()?.Trim()) 
+                                        ? Convert.ToInt32(worksheet.Cells[row, 11].Value?.ToString()?.Trim()) : 0,
+                                        LowerCloudCover = !string.IsNullOrEmpty(worksheet.Cells[row, 12].Value?.ToString()?.Trim()) 
+                                        ? Convert.ToInt32(worksheet.Cells[row, 13].Value?.ToString()?.Trim()) : 0,
+                                        HorizontalVisibility = worksheet.Cells[row, 14].Value?.ToString()?.Trim(),
+                                        NatureInvent = worksheet.Cells[row, 15].Value?.ToString()?.Trim()
                                     });
                                 }
                                 catch (Exception ex)

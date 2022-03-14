@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using OfficeOpenXml;
+using RepositoryLibrary.Inteface;
 using ServiceLibrary;
 using ServiceLibrary.Interface;
 using SunD.Models;
@@ -11,10 +12,10 @@ namespace SunD.Controllers
     {
 
         private readonly IDataConvertService _dataConvertService;
-        private readonly IWeatherService _weatherService;
-        public LoadController(IDataConvertService dataConvertService, IWeatherService weatherService)
+        private readonly IWeatherRepository _weatherRepository;
+        public LoadController(IDataConvertService dataConvertService, IWeatherRepository weatherRepository)
         {
-            _weatherService = weatherService;
+            _weatherRepository = weatherRepository;
             _dataConvertService = dataConvertService;
         }
         public IActionResult Index()
@@ -26,7 +27,7 @@ namespace SunD.Controllers
         public async Task<ActionResult> Import(IFormFile[] file)
         {
             var wheaterStatistics = await _dataConvertService.ImportFromExcel(file);
-            await _weatherService.SaveWheatherStatistic(wheaterStatistics);
+            await _weatherRepository.SaveWeatherStatistic(wheaterStatistics);
             return RedirectToAction("Index");
         }
         

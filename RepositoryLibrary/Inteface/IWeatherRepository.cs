@@ -10,8 +10,8 @@ namespace RepositoryLibrary.Inteface
     public interface IWeatherRepository
     {
         public Task SaveWeatherStatistic(List<WeatherStatistic> wheather);
-        public List<WeatherStatistic> GetWeatherStatistic();
-        public IEnumerable<WeatherStatistic> GetWeatherStatisticsByMounth(int numberOfMounth);
-        public IEnumerable<WeatherStatistic> GetWeatherStatisticsByYear(int year);
+        public Task<List<WeatherStatistic>> GetWeatherStatistic();
+        public Task<IEnumerable<WeatherStatistic>> GetWeatherStatisticsByMounth(int numberOfMounth);
+        public Task<IEnumerable<WeatherStatistic>> GetWeatherStatisticsByYear(int year);
     }
 }

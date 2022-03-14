@@ -1,5 +1,6 @@
 ﻿using BusinessObjects;
 using BusinessObjects.Model;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,21 +17,19 @@ namespace RepositoryLibrary.Inteface
             _context = context;
         }
 
-        public List<WeatherStatistic> GetWeatherStatistic()
+        public async Task<List<WeatherStatistic>> GetWeatherStatistic()
         {
-            return _context.WeatherStatistics.ToList();
+            return await _context.WeatherStatistics.ToListAsync();
         }
 
-        public IEnumerable<WeatherStatistic> GetWeatherStatisticsByMounth(int numberOfMounth)
+        public async Task<IEnumerable<WeatherStatistic>> GetWeatherStatisticsByMounth(int numberOfMounth)
         {
-            var test = _context.WeatherStatistics.ToList();
-            return _context.WeatherStatistics.Where(x => x.Date.Month == numberOfMounth).ToList();
+            return await _context.WeatherStatistics.Where(x => x.Date.Month == numberOfMounth).ToListAsync();
         }
 
-        public IEnumerable<WeatherStatistic> GetWeatherStatisticsByYear(int year)
+        public async Task<IEnumerable<WeatherStatistic>> GetWeatherStatisticsByYear(int year)
         {
-            var test = _context.WeatherStatistics.Where(x => x.Date.Year == year).ToList();
-            return _context.WeatherStatistics.ToList().Where(x=>x.Date.Year == year);
+            return await _context.WeatherStatistics.Where(x => x.Date.Year == year).OrderBy(p=>p.Temperature).ToListAsync();
         }
 
         public async Task SaveWeatherStatistic(List<WeatherStatistic> wheather)

@@ -1,8 +1,7 @@
 ﻿@model SunD.Models.ViewningData
-@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+
 @{
+    ViewBag.Statistics = Model.WeatherStatistics;
 }
 <div>
     <form method="get" action="~/Viewing/GetStatisticByYear">
@@ -17,13 +16,32 @@
             {
                 <option value=@item.Value>@item.Name</option>
             }
-        </select><br/>
+        </select><br />
         <input type="submit" value="Check statistics" />
     </form>
 </div>
 <div id="data">
-    @if(Model.WeatherStatistics != null)
+    @if (Model.WeatherStatistics != null)
     {
-         @Html.Partial("_getStatisticByParametr", Model.WeatherStatistics)   
+        @Html.Partial("_getStatisticByParametr", Model.WeatherStatistics)
+
+        @if (Model.PageViewModel.HasPreviousPage)
+        {
+            <a asp-action="ChangePage"
+               asp-route-page="@(Model.WeatherStatistics)"
+               class="btn btn-outline-dark">
+                <i class="glyphicon glyphicon-chevron-left"></i>
+                Назад
+            </a>
+        }
+        @if (Model.PageViewModel.HasNextPage)
+        {
+            <a asp-action="ChangePage"
+       asp-route-page="@(Model.PageViewModel.PageNumber + 1)"
+       class="btn btn-outline-dark">
+                Вперед
+                <i class="glyphicon glyphicon-chevron-right"></i>
+            </a>
+        }
     }
 </div>

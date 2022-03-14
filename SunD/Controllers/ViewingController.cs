@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using BusinessObjects.Model;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using ReflectionIT.Mvc.Paging;
+using RepositoryLibrary.Inteface;
 using ServiceLibrary.Interface;
 using SunD.Models;
 
@@ -7,11 +10,12 @@ namespace SunD.Controllers
 {
     public class ViewingController : Controller
     {
-        private readonly IWeatherService _weatherService;
-        private  IEnumerable<MounthSelector> mouths;
-        public ViewingController(IWeatherService weatherService)
+        private readonly IWeatherRepository _weatherRepository;
+        private IEnumerable<MounthSelector> mouths;
+        private const int pageSize = 20;
+        public ViewingController(IWeatherRepository weatherRepository)
         {
-            _weatherService = weatherService;
+            _weatherRepository = weatherRepository;
             mouths = GetMounthSelectors();
         }
 
@@ -24,22 +28,38 @@ namespace SunD.Controllers
 
             return View(data);
         }
-        
-        [HttpGet]
-        public IActionResult GetStatisticByMounth(int mounth)
-        {
-            var statistics = _weatherService.GetWeatherStatisticsByMounth(mounth);
-            var data = new ViewningData() { MounthSelectors = mouths, WeatherStatistics = statistics };
 
+        [HttpGet]
+        public async Task<IActionResult> GetStatisticByMounth(int mounth)
+        {
+            var statistics = await _weatherRepository.GetWeatherStatisticsByMounth(mounth);
+            StaticWeather.WeatherStatistics = statistics;
+            var data = GetData(statistics);
 
             return View("Index", data);
         }
 
+
         [HttpGet]
-        public IActionResult GetStatisticByYear(int year)
+        public async Task<IActionResult> GetStatisticByYear(int year)
         {
-            var statistics =  _weatherService.GetWeatherStatisticsByYear(year);
-            var data = new ViewningData() { WeatherStatistics = statistics, MounthSelectors = mouths };
+            var statistics = await _weatherRepository.GetWeatherStatisticsByYear(year);
+            StaticWeather.WeatherStatistics = statistics;
+            var data = GetData(statistics);
+
+            return View("Index", data);
+        }
+
+        public async Task<IActionResult> ChangePage(int page )
+        {
+
+            var statistics = StaticWeather.WeatherStatistics;
+            var count = statistics.Count();
+            var items = statistics.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+
+            PageViewModel pageViewModel = new PageViewModel(count, page, pageSize);
+            var data = new ViewningData() { WeatherStatistics = items, MounthSelectors = mouths, PageViewModel = pageViewModel };
+
 
             return View("Index", data);
         }
@@ -47,7 +67,7 @@ namespace SunD.Controllers
         #region Private Methods
         private IEnumerable<MounthSelector> GetMounthSelectors()
         {
-            var mounths = new List<MounthSelector>() { 
+            var mounths = new List<MounthSelector>() {
                 new MounthSelector{Name="Январь", Value=1},
                 new MounthSelector{Name="Февраль", Value=2},
                 new MounthSelector{Name="Март", Value=3},
@@ -62,6 +82,17 @@ namespace SunD.Controllers
                 new MounthSelector{Name="Декабрь", Value=12},
             };
             return mounths;
+        }
+        private ViewningData GetData(IEnumerable<WeatherStatistic> statistics)
+        {
+            var count = statistics.Count();
+            int page = 1;
+            var items = statistics.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+
+            PageViewModel pageViewModel = new PageViewModel(count, page, pageSize);
+            var data = new ViewningData() { WeatherStatistics = items, MounthSelectors = mouths, PageViewModel = pageViewModel };
+
+            return data;
         }
 
         #endregion

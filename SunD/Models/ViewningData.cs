@@ -6,5 +6,6 @@ namespace SunD.Models
     {
         public IEnumerable<MounthSelector> MounthSelectors { get; set; } = null!;
         public IEnumerable<WeatherStatistic>? WeatherStatistics { get; set; }
+        public PageViewModel? PageViewModel { get; set; }
     }
 }
